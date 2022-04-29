@@ -1,5 +1,5 @@
 # CMU 15-445
- CMU 15-445 Database Systems Course
+ CMU 15-445 Database Systems Course, Fall 2021
 
 +   [Course Website](https://15445.courses.cs.cmu.edu/fall2021/)
 
