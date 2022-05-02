@@ -13,7 +13,7 @@
 
 ## Contents
 
-**Homeworks**
+[**Homeworks**](./homeworks)
 
 +   [SQL]()
 +   [Indexes]()
@@ -21,7 +21,7 @@
 +   [Concurrency Control]()
 +   [Distributed Databases]()
 
-**Projects**
+[**Projects**](https://github.com/Aden-Q/bustub)
 
 +   [C++ Primer]()
 +   [Buffer Pool Manager]()
