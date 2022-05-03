@@ -1,14 +1,4 @@
----
-title: 'CMU 15-445 Project 0 - C++ Primer'
-date: 2022-05-02 14:14:34
-tags:
-- C++
-- Database
-mathjax: true
-categories: Note
----
-
-<!--more-->
+# Project 0 - C++ Primer
 
 [![Travis](https://img.shields.io/badge/language-C++-green.svg)]()
 
