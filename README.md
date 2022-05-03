@@ -21,7 +21,7 @@
 +   [Concurrency Control]()
 +   [Distributed Databases]()
 
-[**Projects**](https://github.com/Aden-Q/bustub)
+[**Projects**](./projects)
 
 +   [C++ Primer]()
 +   [Buffer Pool Manager]()
