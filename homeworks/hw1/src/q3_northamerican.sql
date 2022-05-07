@@ -1,4 +1,7 @@
-SELECT Id, ShipCountry
+SELECT Id, ShipCountry,
+    CASE
+        WHEN ShipCountry IN ('USA', 'Mexico', 'Canada') THEN 'NorthAmerica'
+        ELSE 'OtherPlace' END
 FROM 'Order'
-WHERE ShipCountry IN ('USA', 'Mexico', 'Canada')
-ORDER BY Id ASC LIMIT 20 OFFSET 50;
+WHERE Id >= 15445
+ORDER BY Id ASC LIMIT 20;
