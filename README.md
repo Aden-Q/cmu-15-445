@@ -5,7 +5,7 @@
 +   [Course Notes](https://lyrics-reading.notion.site/CMU-15-445-37b7bb98903a49b297a8bdc71cff826f)
 +   [Texbook Reading Notes](https://lyrics-reading.notion.site/Database-System-Concepts-eb0b86cee63b49c0acc7d45f6a4b366b)
 
-[![Travis](https://img.shields.io/badge/language-c++-green.svg)]()
+[![Travis](https://img.shields.io/badge/language-c++-green.svg)]()[![Travis](https://img.shields.io/badge/language-sql-blue.svg)]()
 
 ## Overview
 
