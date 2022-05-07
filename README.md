@@ -15,19 +15,19 @@
 
 [**Homeworks**](./homeworks)
 
-+   [SQL]()
-+   [Indexes]()
-+   [Join Algorithms]()
-+   [Concurrency Control]()
-+   [Distributed Databases]()
++   [SQL](./homeworks/hw1)
++   [Indexes](./homeworks/hw2)
++   [Join Algorithms](./homeworks/hw3)
++   [Concurrency Control](./homeworks/hw4)
++   [Distributed Databases](./homeworks/hw5)
 
 [**Projects**](./projects)
 
-+   [C++ Primer]()
-+   [Buffer Pool Manager]()
-+   [Hash Index]()
-+   [Query Execution]()
-+   [Concurrency Control]()
++   [C++ Primer](.projects/project0)
++   [Buffer Pool Manager](.projects/project1)
++   [Hash Index](.projects/project2)
++   [Query Execution](.projects/project3)
++   [Concurrency Control](.projects/project4)
 
 ## Credits
 
