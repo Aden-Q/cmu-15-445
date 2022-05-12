@@ -78,17 +78,25 @@ The following functions are implemented:
 
 ## Task 3 - Parallel Buffer Pool Manager
 
-TBD
+To support parallelism, we can use multiple buffer pools, each with its own latch.
 
+In this task, we implement a `ParallelBufferPoolManager` class that holds multiple `BufferPoolManagerInstance`s. We use `page_id mod num_instances` to map a request to some page to some instance of `BufferPoolManagerInstance`.
 
+The following functions are implemented:
 
++   `ParallelBufferPoolManager(num_instances, pool_size, disk_manager, log_manager)`: Constructor, allocate and create individual BufferPoolManagerInstances
++   `~ParallelBufferPoolManager()`: Destructor, destruct all BufferPoolManagerInstances and deallocate any associated memory
++   `GetPoolSize()`: Get size of the buffer pool (sum of the buffer pool size for each `BufferPoolManagerInstance`)
+    +   As simple as `num_instances_ * pool_size_`
++   `GetBufferPoolManager(page_id)`: Retrieve a pointer to the BufferPoolManager responsible for handling given page id, determine by `page_id mod num_instances`
++   `FetchPgImp(page_id)`: Fetch the requested page from the buffer pool
++   `UnpinPgImg(page_id, is_dirty)`: Unpin the target page from the buffer pool
++   `FlushPgImg(page_id)`: Flushes the target page to disk
++   `NewPgImg(page_id)`: Creates a new page in the buffer pool
++   `DeletePgImp(page_id)`: Deletes a page from the buffer pool
++   `FlushAllPagesImpl()`: Flushes all the pages in the buffer pool to disk
 
-
-
-
-
-
-
+Task 3 is just a just trivial wrap up of task 2, don't need to do any concurrency control as long as you have done it in part 2.
 
 ## Testing
 
@@ -150,9 +158,9 @@ To speed up the build process, pass the `-j` flag to enable multi-threading comp
 $ make -j 4
 ```
 
-## Implementations
+## Gradescope
 
-Because the implementation for this project is too naive, I chose not to write anything but post the code on my GitHub.
+![](https://raw.githubusercontent.com/Aden-Q/blogImages/main/img/202205120402984.jpg)
 
 ## Known Issues
 
