@@ -6,7 +6,7 @@
 
 [Project Link](https://github.com/Aden-Q/CMU-15-445/tree/main/projects/project0)
 
-**Note**: The project repo is held private according to course requirements. If you really want the code, please contact me via my email.
+**Note**: The project repo is held private according to the course requirements. If you really want the code, please contact me via my email.
 
 ----
 
