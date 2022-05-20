@@ -87,11 +87,11 @@ Explainations of generic types:
 
 +   `KeyType`: The type of key in the hash table. Key type (of fixed length) must be consistent across a single hash table, as is usually seen in a database index scheme. It is the type of the actual index attribute.
 +   `ValueType`: It is a 64-bit RID which is used to uniquely identify a single record within a table. Equality test for Instances of this type can done using the `==` operator.
-+   `KeyComparator`: Used to compare whether two `KeyTpe` instances are less/greater-than each other
++   `KeyComparator`: Used to compare whether two `KeyType` instances are less/greater-than each other
 
 The following APIs are supported by the hash table:
 
-+   `Insert`: Insert a KV pair into the hash table directory and the corresponding bucket. The method fails if  attemping to insert an existing KV pair.
++   `Insert`: Insert a KV pair into the hash table directory and the corresponding bucket. The method fails if  attempting to insert an existing KV pair.
 +   `GetValue`: Perform point search, non-unique index key is supported. So the hash table allows multiple KV pairs with the same key and different values
 +   `Remove`: Delete a KV pair from the hash table.
 
@@ -123,7 +123,7 @@ First we should notice a fact: Given that the global depth of the hash table is 
 $$
 2^{\text{gdepth} - \text{ldepth}}
 $$
-It tells us that if the local depth of every bucket is strictly less than the global depth of the hash table directory. Then we don't necessary so many entries in the directory thus it can be shrinked.
+It tells us that if the local depth of every bucket is strictly less than the global depth of the hash table directory. Then we don't necessary so many entries in the directory thus it can shrink.
 
 It is implemented within the following two files:
 
@@ -137,7 +137,7 @@ When we attemp to insert a new KV pair into the extendible hash table. There are
 1.   When the target bucket for insertion is not full. We only need to insert the KV pair into the bucket.
 2.   When the target bucket for insertion is full. There are two possibilties in this case:
      +   If the `local_depth` of the target page is strictly less than the `global_depth` of the hash table, meaning that there are multiple entries in the directory page pointing to the target bucket page. Then in the first round, we attemp to split the bucket into two buckets (one is the old one, one is the new one), and modify the directory entries in the hash table so that half of the previous `bucket_page_ids` that refer to the old bucket page now refer to the new split image. And the other half are left as they are. Then we redistribute the exisiting KV pairs in the old bucket page into the old one and the split image. By doing this we try to make some room for the new KV pair. However, although it rare, it is still possbile that the new target bucket (either the old one or the new one) is still full and we need to do further adjustment. So we call `Insert` recursively.
-     +   If the `local_depth` of the target page is equal to the `global_depth` of the hash table, meaning that there is only one entry in the directory page pointing to the target bucket page. In order to insert a new KV pair, we have to double the size of the directory page and increment the global depth. Before that, we should make sure that the size of the directory after expanding does not exceed the maximum, which is defined as a maro `DIRECTORY_ARRAY_SIZE` in the file `src/include/storage/page/hash_table_page_defs.h`, in our implementation, the number is 512. Same as the previous situation, after doubling the size of the directory, we modify the entries, redistribute the old KV pairs in the old bucket page, and call `Insert` recursively, until either the insertion succeeds or the maximum directory size is reached.
+     +   If the `local_depth` of the target page is equal to the `global_depth` of the hash table, meaning that there is only one entry in the directory page pointing to the target bucket page. In order to insert a new KV pair, we have to double the size of the directory page and increment the global depth. Before that, we should make sure that the size of the directory after expanding does not exceed the maximum, which is defined as a macro `DIRECTORY_ARRAY_SIZE` in the file `src/include/storage/page/hash_table_page_defs.h`, in our implementation, the number is 512. Same as the previous situation, after doubling the size of the directory, we modify the entries, redistribute the old KV pairs in the old bucket page, and call `Insert` recursively, until either the insertion succeeds or the maximum directory size is reached.
 
 ### Deletion Implementation Details
 
@@ -176,7 +176,7 @@ To implement concurrency control for the extendible hash table scheme, we apply 
 +   Do not lock/unlock across different functions, which may degrade the concurrency performance
 +   When the `SplitInsert` happens when the directory page becomes full and all the target bucket becomes full. In a concurrent scenario (in a single thread situation, always choose the first option, otherwise there will be an infinite loop), we have to make a decision:
     +   Either return `false` in `SplitInsert`, indicating that the current insertion fails
-    +   Or put the current the thread into sleep for some duration, and attemp to call `Insert` again (in the case that we hope other threads acquire the write lock and delete some KV pairs in the target bucket)
+    +   Or put the current the thread into sleep for some duration, and attempt to call `Insert` again (in the case that we hope other threads acquire the write lock and delete some KV pairs in the target bucket)
 +   For the `Merge` API, scan through all the buckets to see whether any other merges are needed. In the function call to `Remove`, it is possible that more than two buckets become empty before `Merge` in any threads acquire the write lock
 +   If a write latch is applied on the whole hash table, then don't need to apply further read/write latches on other pages because the whole hash table becomes inaccessible for other threads under a write latch
 
