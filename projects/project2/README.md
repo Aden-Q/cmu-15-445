@@ -178,6 +178,7 @@ To implement concurrency control for the extendible hash table scheme, we apply 
     +   Either return `false` in `SplitInsert`, indicating that the current insertion fails
     +   Or put the current the thread into sleep for some duration, and attemp to call `Insert` again (in the case that we hope other threads acquire the write lock and delete some KV pairs in the target bucket)
 +   For the `Merge` API, scan through all the buckets to see whether any other merges are needed. In the function call to `Remove`, it is possible that more than two buckets become empty before `Merge` in any threads acquire the write lock
++   If a write latch is applied on the whole hash table, then don't need to apply further read/write latches on other pages because the whole hash table becomes inaccessible for other threads under a write latch
 
 ## Testing
 
@@ -237,7 +238,7 @@ Add `#include "common/logger.h"` to any file in which you want to make use of th
 
 ![](https://raw.githubusercontent.com/Aden-Q/blogImages/main/img/202205200105454.png)
 
-## References
+## Useful Links
 
 +   [CMU-15445 2021 Project 2-Extendible Hash Index](https://blog.csdn.net/qq_52582768/article/details/124594693?spm=1001.2101.3001.6650.3&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-3-124594693-blog-116752745.pc_relevant_default&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-3-124594693-blog-116752745.pc_relevant_default&utm_relevant_index=5) (the most useful one for concurrency control)
 
