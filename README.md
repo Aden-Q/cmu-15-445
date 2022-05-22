@@ -23,11 +23,11 @@ CMU 15-445 Database Systems Course, Fall 2021
 
 [**Projects**](./projects)
 
-+   [C++ Primer](.projects/project0)
-+   [Buffer Pool Manager](.projects/project1)
-+   [Hash Index](.projects/project2)
-+   [Query Execution](.projects/project3)
-+   [Concurrency Control](.projects/project4)
++   [C++ Primer](./projects/project0)
++   [Buffer Pool Manager](./projects/project1)
++   [Hash Index](./projects/project2)
++   [Query Execution](./projects/project3)
++   [Concurrency Control](./projects/project4)
 
 ## Credits
 
