@@ -15,10 +15,10 @@
 [BusTub](https://github.com/cmu-db/bustub) DBMS is used as the skeleton code. In this project, I add support for query execution to the database system. I create executors that are able to take query plans and execute them. The following operations are supported:
 
 +   **Access Methods**: Sequential Scan
-+   **Modications**: Insert, Update, Delete
++   **Modifications**: Insert, Update, Delete
 +   **Miscellaneous**: Nested Loop Join, Hash Join, Aggregation, Limit, Distinct
 
-We use the *iterator* query processing model (the Volcano model). In this model, every query plan executor implements a `Next` function. When the DBMS invokes an executor's `Next` function, it returns either a single tuple or an indicator that there are no more tuples available. In the implemention, each executor implements a loop that continues calling `Next` on its children to retrieve tuples and process them one-by-one. In BusTub's implementation, the `Next` function returns a record identifier `RID` along with a tuple. The correctness of the project depends on our previous implementations of [buffer pool manager](https://github.com/Aden-Q/CMU-15-445/tree/main/projects/project1) and [extendible hash table](https://github.com/Aden-Q/CMU-15-445/tree/main/projects/project2).
+We use the *iterator* query processing model (the Volcano model). In this model, every query plan executor implements a `Next` function. When the DBMS invokes an executor's `Next` function, it returns either a single tuple or an indicator that there are no more tuples available. In the implementation, each executor implements a loop that continues calling `Next` on its children to retrieve tuples and process them one-by-one. In BusTub's implementation, the `Next` function returns a record identifier `RID` along with a tuple. The correctness of the project depends on our previous implementations of [buffer pool manager](https://github.com/Aden-Q/CMU-15-445/tree/main/projects/project1) and [extendible hash table](https://github.com/Aden-Q/CMU-15-445/tree/main/projects/project2).
 
 This project assumes a single-threaded context.
 
@@ -40,7 +40,7 @@ The interfaces of executors are defined in the following header files:
 
 Several other executors such as `index_scan_executor` and `nested_index_join_executor` already exist in the repository.
 
-Plan nodes are the individual elements that compose a query plan. Each plan node defines information specific to the operator that it represents. Each executor is reponsible for processing a single plan node type. The plan nodes are defined in the following header files:
+Plan nodes are the individual elements that compose a query plan. Each plan node defines information specific to the operator that it represents. Each executor is responsible for processing a single plan node type. The plan nodes are defined in the following header files:
 
 +   `src/include/execution/plans/seq_scan_plan.h`
 
@@ -59,7 +59,7 @@ The `ExecutionEngine` helper class converts the input query plan to a query exec
 
 Some executors may modify the table as well as the index. We use the extendible hash table implementation from Project 2 as the underlying data structure for all indexes in this project.
 
-BusTub maintains an internal catalog to keep track of meta-data about the database. In this project, some executors will interact with the system catalog to query information regarding tables, indexes, and their schemas. The catalog implementation is in `src/include/catalog.h`.
+BusTub maintains an internal catalog to keep track of meta-data about the database. In this project, some executors will interact with the system catalog to query information regarding tables, indexes, and the schemas. The catalog implementation is in `src/include/catalog.h`.
 
 **Sequential Scan**
 
@@ -80,7 +80,7 @@ Multiple rows may be inserted sequentially for a single execution plan. We perfo
 
 **Update**
 
-The `UpdateExecutor` modified existing tuples in a specified table and update its indexes. It always has a child executor that tells the tuple to be updated (identified by `RID`). In our implementation, `UpdatePlanNode` will have a (at most one child) `SeqScanPlanNode` as its child.
+The `UpdateExecutor` modified existing tuples in a specified table and update the indexes. It always has a child executor that tells the tuple to be updated (identified by `RID`). In our implementation, `UpdatePlanNode` will have a (at most one child) `SeqScanPlanNode` as its child.
 
 The `GenerateUpdateTuple` method defined in `UpdateExecutor` class helps construct an updated tuple based on the provided update attributes.
 
@@ -146,13 +146,13 @@ There are two phases for the basic hash join algorithm:
 
 +   Phase #1: Build
     +   Scan the outer relation and populate a hash table using the hash function on the join attributes.
-    +   Each hash table entry is a pair of `<Key, Value>`, for which the `Key` is hashed value of the attributes to be joined on, and the `Value` may vary per implementation. In my implementation, it is a collection of full tuples. We may also store a tuple identifier (`RID` for example) in order to reduce the space overhead. However, there will be an extra search time overhead to fetch a tuple in the outer table for each comparision.
+    +   Each hash table entry is a pair of `<Key, Value>`, for which the `Key` is hashed value of the attributes to be joined on, and the `Value` may vary per implementation. In my implementation, it is a collection of full tuples. We may also store a tuple identifier (`RID` for example) in order to reduce the space overhead. However, there will be an extra search time overhead to fetch a tuple in the outer table for each comparison.
 +   Phase #2: Probe
     +   Scan the inner relation and use the same hash function on each tuple to jump to a location in the hash table (which is previously built), do a brute force search to find a match.
 
 Optimization approach: We may use a **Bloom Filter** to pre-filter out some keys before actually doing probing.
 
-**Note**: Currently in my implementation, a hash join can only be performed on a single join attribute. **It is not my fault. That is due to the signature of the `HashJoinPlanNode` constructor. The constructor only accepts two `AbstractExpression` insead of vectors of `AbstractExpression`. **
+**Note**: Currently in my implementation, a hash join can only be performed on a single join attribute. **It is not my fault. That is due to the signature of the `HashJoinPlanNode` constructor. The constructor only accepts two `AbstractExpression` instead of vectors of `AbstractExpression`. **
 
 **Aggregation**
 
