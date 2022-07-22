@@ -31,7 +31,7 @@ CMU 15-445 Database Systems Course, Fall 2021
 
 ## Credits
 
-Zecheng Qian - qian0102@umn.edu
+Myself
 
 ## License
 
