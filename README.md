@@ -29,10 +29,6 @@ CMU 15-445 Database Systems Course, Fall 2021
 +   [Query Execution](./projects/project3)
 +   [Concurrency Control](./projects/project4)
 
-## Credits
-
-Myself
-
 ## License
 
 [MIT](./LICENSE)
