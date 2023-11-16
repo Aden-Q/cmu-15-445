@@ -247,7 +247,3 @@ Add `#include "common/logger.h"` to any file in which you want to make use of th
 ## Known Issues
 
 Not found yet
-
-## Credits
-
-Zecheng Qian (qian0102@umn.edu)
