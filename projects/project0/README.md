@@ -78,7 +78,3 @@ Because the implementation for this project is too naive, I chose not to write a
 ## Known Issues
 
 Not found yet
-
-## Credits
-
-Zecheng Qian (qian0102@umn.edu)
