@@ -309,7 +309,3 @@ src/include/storage/page/tmp_tuple_page.h
 ## Known Issues
 
 Not found yet
-
-## Credits
-
-Zecheng Qian (qian0102@umn.edu)
