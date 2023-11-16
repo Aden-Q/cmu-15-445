@@ -165,7 +165,3 @@ $ make -j 4
 ## Known Issues
 
 Not found yet
-
-## Credits
-
-Zecheng Qian (qian0102@umn.edu)
